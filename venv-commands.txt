@@ -1,0 +1,2 @@
+ python3 -m venv /home/javierrojas/Programming/p3-general/
+ source /home/javierrojas/Programming/p3-general/bin/activate
