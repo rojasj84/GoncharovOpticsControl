@@ -4,6 +4,7 @@ from PIL import ImageTk, Image
 from pathlib import Path
 
 # Importing local libraries
+from aerotech_communication import Ensemble_Motors
 
 #*****Global Variables*****
 win_color = "light gray"
@@ -25,12 +26,12 @@ def scale_images(file_loc,scale):
     return img
 
 #***** Define Classes to build Gui*****
-class ObjectivePositionPanel(tk.Frame):
+class ThreeAxisControlPanel(tk.Frame):
 
     jog_speed_local = 1
     bt_scale = 8
 
-    def __init__(self, container, x_location, y_location):
+    def __init__(self, container, x_location, y_location, axis_names):
         super().__init__(container)
         
         frame_width = 200
@@ -48,7 +49,10 @@ class ObjectivePositionPanel(tk.Frame):
         self.config(background=win_color, highlightbackground="black", highlightthickness=1, relief="raised")
         self.place(x=x_location,y=y_location,width = frame_width,height = frame_height)
         #self.pack(pady=10)
-        
+
+        #Creating the object that communicates with the motors through Aerotech Ensemble
+        motor_object = Ensemble_Motors()
+                
 
         travel_label = tk.Label(self, text="XY TRAVEL")
         #travel_label.place(x = 5, y = 5, width=frame_width-10, height=25)
@@ -58,28 +62,28 @@ class ObjectivePositionPanel(tk.Frame):
         jog_up = tk.Button(self, text="UP", image=self.jog_up_button_image, relief=tk.FLAT, background=win_color)
         #jog_up.place(x = cross_center_x_position - 1*(button_short_dimension)/2, y = cross_center_y_position - 1*button_long_dimension - button_short_dimension, width = button_short_dimension-button_spacing, height = button_long_dimension-button_spacing)
         jog_up.grid(row = 1, column = 2)
-        jog_up.bind("<ButtonPress>", lambda event:  self.motor_motion("Y","+"))
+        jog_up.bind("<ButtonPress>", lambda event:  self.motor_motion(axis_names[1],"+"))
         #jog_up.bind("<ButtonRelease>", lambda event:   self.motor_motion(0))
 
         self.jog_down_button_image = ImageTk.PhotoImage(scale_images(Path(r"images/down.png"),4))
         jog_down = tk.Button(self, text="DOWN", image=self.jog_down_button_image, relief=tk.FLAT, background=win_color)
         jog_down.grid(row = 3, column = 2)
         #jog_down.place(x = cross_center_x_position - 1*(button_short_dimension)/2, y = cross_center_y_position, width = button_short_dimension-button_spacing, height = button_long_dimension-button_spacing)
-        jog_down.bind("<ButtonPress>", lambda event:  self.motor_motion("Y","-"))
+        jog_down.bind("<ButtonPress>", lambda event:  self.motor_motion(axis_names[1],"-"))
         #jog_down.bind("<ButtonRelease>", lambda event:   self.motor_motion(0))
 
         self.jog_right_button_image = ImageTk.PhotoImage(scale_images(Path(r"images/right.png"),4))
         jog_right = tk.Button(self, text="RIGHT", image=self.jog_right_button_image, relief=tk.FLAT, background=win_color)
         #jog_right.place(x = cross_center_x_position - 0*button_long_dimension + 1*(button_short_dimension)/2, y = cross_center_y_position - button_short_dimension , width = button_long_dimension-button_spacing, height = button_short_dimension-button_spacing)
         jog_right.grid(row = 2, column = 3)
-        jog_right.bind("<ButtonPress>", lambda event:  self.motor_motion("X","+"))
+        jog_right.bind("<ButtonPress>", lambda event:  self.motor_motion(axis_names[0],"+"))
         #jog_right.bind("<ButtonRelease>", lambda event:   self.motor_motion(0))
 
         self.jog_left_button_image = ImageTk.PhotoImage(scale_images(Path(r"images/left.png"),4))
         jog_left = tk.Button(self, text="LEFT", image=self.jog_left_button_image, relief=tk.FLAT, background=win_color)
         #jog_left.place(x = cross_center_x_position - 1*button_long_dimension - 1*(button_short_dimension)/2, y = cross_center_y_position - button_short_dimension , width = button_long_dimension-button_spacing, height = button_short_dimension-button_spacing)
         jog_left.grid(row = 2, column = 1)
-        jog_left.bind("<ButtonPress>", lambda event:  self.motor_motion("X","-"))
+        jog_left.bind("<ButtonPress>", lambda event:  self.motor_motion(axis_names[0],"-"))
         #jog_left.bind("<ButtonRelease>", lambda event:   self.motor_motion(0))
 
         focus_label = tk.Label(self, text="FOCUS")
@@ -90,14 +94,14 @@ class ObjectivePositionPanel(tk.Frame):
         focus_in = tk.Button(self, text="FOCUS IN", image=self.jog_focusin_button_image, relief=tk.FLAT, background=win_color)
         #focus_in.place(x = cross_center_x_position - 1*button_long_dimension - 1*(button_short_dimension)/2, y = 200 + button_short_dimension , width = button_long_dimension-button_spacing, height = button_short_dimension-button_spacing)
         focus_in.grid(row = 5, column = 0, columnspan=2, sticky='e', padx=10)
-        focus_in.bind("<ButtonPress>", lambda event:  self.motor_motion("Z","+"))
+        focus_in.bind("<ButtonPress>", lambda event:  self.motor_motion(axis_names[2],"+"))
         #focus_in.bind("<ButtonRelease>", lambda event:   self.motor_motion(0))
 
         self.jog_focusout_button_image = ImageTk.PhotoImage(scale_images(Path(r"images/focus-out.png"),4))
         focus_out = tk.Button(self, text="FOCUS OUT", image=self.jog_focusout_button_image, relief=tk.FLAT, background=win_color)
         #focus_out.place(x = cross_center_x_position - 0*button_long_dimension + 1*(button_short_dimension)/2, y = 200 + button_short_dimension , width = button_long_dimension-button_spacing, height = button_short_dimension-button_spacing)
         focus_out.grid(row = 5, column = 3, columnspan=2, sticky='w', padx=10)
-        focus_out.bind("<ButtonPress>", lambda event:  self.motor_motion("Z","-"))
+        focus_out.bind("<ButtonPress>", lambda event:  self.motor_motion(axis_names[2],"-"))
         #focus_out.bind("<ButtonRelease>", lambda event:   self.motor_motion(0))
 
         step_size_label = tk.Label(self, text="Step Size (μm)")
@@ -133,9 +137,9 @@ class ObjectivePositionPanel(tk.Frame):
         velocity = str(velocity_float)
 
         if direction == "+":
-             command_string = "MOVEINC" + axis + step_size + "F" + axis + velocity
+             command_string = "MOVEINC" + axis + step_size + axis  + "F" + velocity
         elif direction == "-":
-            command_string = "MOVEINC" + axis + "-" + step_size + "F" + axis + velocity
+            command_string = "MOVEINC" + axis + "-" + step_size + axis  + "F"+ velocity
                 
         print(command_string)
 
@@ -148,7 +152,7 @@ if __name__ == "__main__":
     window.title("Motor Control Gui")
     window.geometry("210x390")
 
-    A = ObjectivePositionPanel(window, 5, 5)
+    A = ThreeAxisControlPanel(window, 5, 5,["X","Y","Z"])
 
 
     window.mainloop()

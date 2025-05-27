@@ -57,10 +57,8 @@ class Ensemble_Motors:
         self.write_command(axis_name, command)
         #print("Axis " + axis_name + " is Home.")
 
-    def move_increment(self, command):
-        #move the axis
-        print(command)
-        self.write_command(command)
+    def move_increment(self, axis_name, distance, direction, speed):
+        x = 0
 
 if __name__ == "__main__":
     

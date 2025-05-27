@@ -2,6 +2,8 @@
 import tkinter as tk
 from PIL import ImageTk, Image
 
+import motor_controls as MotorControls
+
 # Importing local libraries
 
 
@@ -13,8 +15,13 @@ if __name__ == "__main__":
 
     # Begin code with window code
     window = tk.Tk()
-    window.title("EPL Laser Heating Control")
-    window.geometry("1800x1010")
+    window.title("Alex Laser Heating Control")
+    window.geometry("600x600")
+
+    objectivePositioner = MotorControls.ThreeAxisControlPanel(window, 5, 5,["X","Y","Z"])
+    nanoPositioner = MotorControls.ThreeAxisControlPanel(window, 225, 5,["nanoX","nanoY","nanoZ"])
+
+
 
 
     window.mainloop()
