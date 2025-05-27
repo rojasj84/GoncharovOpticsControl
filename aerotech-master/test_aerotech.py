@@ -22,8 +22,8 @@ class Test(unittest.TestCase):
         self.my_ensemble.close()
 
 if __name__ == '__main__':
-        ip = '192.168.1.100'
-        port = 8000
+        ip = '192.168.1.101'
+        port = 8001
         my_ensemble = Ensemble(ip, port)
         my_ensemble.connect()
         my_ensemble.reset()
