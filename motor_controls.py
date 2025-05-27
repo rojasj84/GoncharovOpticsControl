@@ -125,8 +125,12 @@ class ObjectivePositionPanel(tk.Frame):
         elif motor_state == 0:
             print("0")'''
         
-        step_size = self.step_size_text.get() 
-        velocity = self.step_velocity_text.get()
+        #Convert the inputs from mm to microns.
+        step_size_float = float(self.step_size_text.get())/1000
+        velocity_float = float(self.step_velocity_text.get())/1000
+
+        step_size = str(step_size_float)
+        velocity = str(velocity_float)
 
         if direction == "+":
              command_string = "MOVEINC" + axis + step_size + "F" + axis + velocity
