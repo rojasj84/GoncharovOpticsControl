@@ -18,7 +18,7 @@ if __name__ == "__main__":
     window.title("Alex Laser Heating Control")
     window.geometry("600x600")
 
-    objectivePositioner = MotorControls.ThreeAxisControlPanel(window, 5, 5,["X","Y","Z"])
+    objectivePositioner = MotorControls.ThreeAxisControlPanel(window, 5, 5,["Y","Z","X"])
     nanoPositioner = MotorControls.ThreeAxisControlPanel(window, 225, 5,["nanoX","nanoY","nanoZ"])
 
 

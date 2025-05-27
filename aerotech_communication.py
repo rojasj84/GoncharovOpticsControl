@@ -6,17 +6,18 @@ NAK_CHAR = '!'                      #  command error.
 FAULT_CHARACTER = '#'               #  task error.
 TIMEOUT_CHARACTER = '$'
 
-class Ensemble_Motors:
+class Ensemble_Motors():
     def __init__(self):
         #creating arrays that store the information for the different motor drivers
         self.device_name = "Emsemble Epaq"
         self.device_ip = "192.168.1.100"
         self.device_port = 8000
-        
+        #print("test")
         #The Ensemble Epaq operates 4 Axis, the MLs operate 2 Axis which drive the nano steppers.
         self.axis_names = ["X", "Y", "Z", "nanoZ", "nanoX", "nanoY"]        
 
         self.ensemble_epaq_connection = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        #self.connect_to_devices()
 
     def connect_to_devices(self):
         # open connection to device
@@ -54,11 +55,18 @@ class Ensemble_Motors:
         #home the axis
         command = "HOME " + axis_name
         print(command)
-        self.write_command(axis_name, command)
+        self.write_command(command)
         #print("Axis " + axis_name + " is Home.")
 
     def move_increment(self, axis_name, distance, direction, speed):
         x = 0
+
+    def close_connection(self):
+        #Close the connection
+        self.ensemble_epaq_connection.close()
+
+    def reset_connection(self):
+        self.write_command('RESET')
 
 if __name__ == "__main__":
     

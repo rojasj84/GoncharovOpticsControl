@@ -51,7 +51,11 @@ class ThreeAxisControlPanel(tk.Frame):
         #self.pack(pady=10)
 
         #Creating the object that communicates with the motors through Aerotech Ensemble
-        motor_object = Ensemble_Motors()
+        self.motor_object = Ensemble_Motors()
+        self.motor_object.connect_to_devices()
+        #self.motor_object.home_axis("X")
+        #self.motor_object.home_axis("Y")
+        #self.motor_object.home_axis("Z")
                 
 
         travel_label = tk.Label(self, text="XY TRAVEL")
@@ -122,7 +126,6 @@ class ThreeAxisControlPanel(tk.Frame):
         self.step_velocity_text.grid(row = 9, column = 0, columnspan=5)
         self.step_velocity_text.insert(tk.END, "2")
 
-
     def motor_motion(self, axis, direction):
         '''if motor_state == 1:
             print("1")
@@ -137,11 +140,15 @@ class ThreeAxisControlPanel(tk.Frame):
         velocity = str(velocity_float)
 
         if direction == "+":
-             command_string = "MOVEINC" + axis + step_size + axis  + "F" + velocity
+             command_string = "MOVEINC " + axis + " " + step_size + " " + axis  + "F " + velocity
         elif direction == "-":
-            command_string = "MOVEINC" + axis + "-" + step_size + axis  + "F"+ velocity
-                
+            command_string = "MOVEINC " + axis + " -" + step_size + " " + axis  + "F "+ velocity
+
+        
+        #self.motor_object.connect_to_devices()
+        self.motor_object.write_command(command_string)        
         print(command_string)
+        
 
 if __name__ == "__main__":
 
