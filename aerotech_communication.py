@@ -42,7 +42,9 @@ class Ensemble_Motors():
         
         if code_from_device != ACKNOWLEDGE_CHARACTER:
             print("Error from write_command attempt.")
-            print(device_response)    
+            print(device_response)
+        else:
+            print("Action succesful.")    
 
     # Functions for controlling the Axis
     def enable_axis(self, axis_name):
