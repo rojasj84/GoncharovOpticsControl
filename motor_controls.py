@@ -53,10 +53,11 @@ class ThreeAxisControlPanel(tk.Frame):
         #Creating the object that communicates with the motors through Aerotech Ensemble
         self.motor_object = Ensemble_Motors()
         self.motor_object.connect_to_devices()
-        #self.motor_object.home_axis("X")
-        #self.motor_object.home_axis("Y")
-        #self.motor_object.home_axis("Z")
-                
+
+        #enable all axis
+        for i in range(3):            
+            self.motor_object.enable_axis(axis_names[i])
+
 
         travel_label = tk.Label(self, text="XY TRAVEL")
         #travel_label.place(x = 5, y = 5, width=frame_width-10, height=25)
