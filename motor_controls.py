@@ -160,7 +160,7 @@ if __name__ == "__main__":
     window.title("Motor Control Gui")
     window.geometry("210x390")
 
-    A = ThreeAxisControlPanel(window, 5, 5,["X","Y","Z"])
+    A = ThreeAxisControlPanel(window, 5, 5,["nanoX","nanoY","nanoZ"])
 
 
     window.mainloop()

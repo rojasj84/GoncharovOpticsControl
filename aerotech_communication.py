@@ -50,7 +50,7 @@ class Ensemble_Motors():
     def enable_axis(self, axis_name):
         "Enable the axis"
         command = "ENABLE " + axis_name
-        self.write_command(axis_name, command)
+        self.write_command(command)
         print("Axis " + axis_name + " is enabled.")
 
     def home_axis(self, axis_name):
