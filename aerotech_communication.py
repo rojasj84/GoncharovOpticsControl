@@ -73,6 +73,6 @@ class Ensemble_Motors():
 if __name__ == "__main__":
     
     A = Ensemble_Motors()
-    A.connect_to_devices()
+    #A.connect_to_devices()
     #A.enable_axis("nanoX")
     A.home_axis("nanoX")

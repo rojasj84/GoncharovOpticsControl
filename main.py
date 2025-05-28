@@ -20,7 +20,7 @@ if __name__ == "__main__":
     window.geometry("600x600")
 
     aerotech_epaq = Ensemble_Motors()
-    objectivePositioner = MotorControls.ThreeAxisControlPanel(window, 5, 5,["Y","Z","X"],["+","+","-"],aerotech_epaq)
+    objectivePositioner = MotorControls.ThreeAxisControlPanel(window, 5, 5,["X","Z","Y"],["+","+","-"],aerotech_epaq)
     nanoPositioner = MotorControls.ThreeAxisControlPanel(window, 225, 5,["nanoX","nanoY","nanoZ"],["+","+","-"],aerotech_epaq)
 
 

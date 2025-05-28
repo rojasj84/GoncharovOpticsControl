@@ -44,6 +44,7 @@ class ThreeAxisControlPanel(tk.Frame):
         cross_center_x_position = frame_width/2
         cross_center_y_position = 135
 
+        self.axis_names = axis_names
         self.axis_direction_correct = axis_directions
 
 
@@ -130,6 +131,14 @@ class ThreeAxisControlPanel(tk.Frame):
         self.step_velocity_text.grid(row = 9, column = 0, columnspan=5)
         self.step_velocity_text.insert(tk.END, "2")
 
+        reset_faults = tk.Button(self, text="RESET ALL")
+        reset_faults.grid(row=10,column=1)
+        reset_faults.bind("<ButtonPress>", lambda event:  self.reset_errors_on_epaq())
+
+        connect_to_devices = tk.Button(self, text="CONNECT",command=self.connect_to_motors())
+        connect_to_devices.grid(row=10,column=2)
+        connect_to_devices.bind("<ButtonPress>", lambda event:  self.connect_to_motors())
+
     def motor_inc_motion(self, axis, direction):        
         #Convert the inputs from mm to microns.
         step_size_float = float(self.step_size_text.get())/1000
@@ -147,6 +156,15 @@ class ThreeAxisControlPanel(tk.Frame):
         #self.motor_comm_object.connect_to_devices()
         self.motor_comm_object.write_command(command_string)        
         print(command_string)
+
+    def reset_errors_on_epaq(self):
+        self.motor_comm_object.write_command("ACKNOWLEDGEALL")
+    
+    def connect_to_motors(self):
+        x = 0
+        #self.motor_comm_object.connect_to_devices()
+        ##self.motor_comm_object.write_command("HOME " + self.axis_names[1])
+        #self.motor_comm_object.write_command("HOME " + self.axis_names[2])
         
 
 if __name__ == "__main__":
