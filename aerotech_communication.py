@@ -14,10 +14,10 @@ class Ensemble_Motors():
         self.device_port = 8000
         #print("test")
         #The Ensemble Epaq operates 4 Axis, the MLs operate 2 Axis which drive the nano steppers.
-        self.axis_names = ["X", "Y", "Z", "nanoZ", "nanoX", "nanoY"]        
+        #self.axis_names = ["X", "Y", "Z", "nanoZ", "nanoX", "nanoY"]        
 
         self.ensemble_epaq_connection = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        #self.connect_to_devices()
+        self.connect_to_devices()
 
     def connect_to_devices(self):
         # open connection to device
