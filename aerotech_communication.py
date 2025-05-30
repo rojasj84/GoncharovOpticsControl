@@ -1,4 +1,5 @@
 import socket
+import time
 
 END_OF_STRING_CHARACTER = '\n'      # End of string character
 ACKNOWLEDGE_CHARACTER = '%'         #  indicate success.
@@ -35,6 +36,7 @@ class Ensemble_Motors():
 
         #Send command to the device
         self.ensemble_epaq_connection.send(command.encode())
+        time.sleep(250)
 
         #Read response back from the device
         read = self.ensemble_epaq_connection.recv(4096).decode().strip()
@@ -69,7 +71,7 @@ class Ensemble_Motors():
 
     def reset_connection(self):
         self.write_command('RESET')
-
+        
 if __name__ == "__main__":
     
     A = Ensemble_Motors()

@@ -147,6 +147,11 @@ class ThreeAxisControlPanel(tk.Frame):
         #self.motor_comm_object.connect_to_devices()
         self.motor_comm_object.write_command(command_string)        
         print(command_string)
+
+    def check_connection_status():        
+        try:
+            self.motor_comm_object.write_command("command_string") 
+            
         
 
 if __name__ == "__main__":
