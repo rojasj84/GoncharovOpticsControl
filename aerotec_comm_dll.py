@@ -1,13 +1,17 @@
-assembly_path1 = r"C:\Users\jarojas\Desktop\Alex Laser System\_Control Program Code\GoncharovOpticsControl\aerotech_dotnet_dlls"
+assembly_path1 = "aerotech_dotnet_dlls"
 
 import sys
 
 sys.path.append(assembly_path1)
 
-import clr
-clr.AddReference('AerotechEnsemble')
-clr.AddReference('AerotechCommon')
+from pythonnet import load
+load("coreclr")
 
-from AerotechEnsemble import Controller
+import clr
+clr.AddReference("System.Windows.Forms")
+clr.AddReference('AerotechEnsemble.dll')
+clr.AddReference('AerotechCommon.dll')
+
+from Aerotech.Ensemble import Controller
 
 A = Controller()
