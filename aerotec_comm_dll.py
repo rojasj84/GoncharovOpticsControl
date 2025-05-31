@@ -1,17 +1,29 @@
-assembly_path1 = "aerotech_dotnet_dlls"
+#assembly_path1 = "aerotech_dotnet_dlls"
 
 import sys
 
-sys.path.append(assembly_path1)
+#sys.path.append(assembly_path1)
 
 from pythonnet import load
 load("coreclr")
 
 import clr
-clr.AddReference("System.Windows.Forms")
-clr.AddReference('AerotechEnsemble.dll')
-clr.AddReference('AerotechCommon.dll')
 
-from Aerotech.Ensemble import Controller
+assemblydir = "aerotech_dotnet_dlls"
+assembly_1 = "Aerotech.Ensemble"
+assembly_2= "Aerotech.Common"
 
-A = Controller()
+
+#sys.path.insert(0, "C:/Windows/System32")
+sys.path.insert(0, assemblydir)
+
+#print(clr.FindAssembly('AerotechCommon'))
+
+clr.AddReference(assembly_1)
+clr.AddReference(assembly_2)
+
+import Aerotech.Ensemble # type: ignore
+import Aerotech.Common # type: ignore
+
+A = Aerotech.Ensemble.Controller
+A.Connect()
