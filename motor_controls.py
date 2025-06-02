@@ -5,6 +5,22 @@ from pathlib import Path
 
 # Importing local libraries
 from aerotech_communication import Ensemble_Motors
+from aerotech_comm import EnsembleController
+
+# Importing Aerotech .NET DLLs for motion control code
+'''import sys
+import clr
+
+assemblydir = "aerotech_dotnet_dlls"
+assembly_1 = "Aerotech.Ensemble"
+assembly_2= "Aerotech.Common"
+assembly_3= "EnsembleCore64"
+
+sys.path.insert(0, assemblydir)
+
+#Importing Aerotech.Ensemble and Aerotech.Common
+clr.AddReference(assembly_1)
+clr.AddReference(assembly_2)'''
 
 #*****Global Variables*****
 win_color = "light gray"
@@ -60,8 +76,9 @@ class ThreeAxisControlPanel(tk.Frame):
         # 
 
         #enable all axis
-        for i in range(3):            
-            self.motor_comm_object.enable_axis(axis_names[i])
+        self.motor_comm_object.EnableAxes(axis_names)
+        #for i in range(3):            
+            #self.motor_comm_object.enable_axis(axis_names[i])
 
         travel_label = tk.Label(self, text="XY TRAVEL")
         #travel_label.place(x = 5, y = 5, width=frame_width-10, height=25)
@@ -152,26 +169,16 @@ class ThreeAxisControlPanel(tk.Frame):
         elif direction == "-":
             command_string = "MOVEINC " + axis + " -" + step_size + " " + axis  + "F "+ velocity
 
+        self.motor_comm_object.MoveINC(axis, step_size_float, velocity_float)
         
         #self.motor_comm_object.connect_to_devices()
-        self.motor_comm_object.write_command(command_string)        
-        print(command_string)
+        #self.motor_comm_object.write_command(command_string)        
 
-<<<<<<< HEAD
-    def check_connection_status():        
-        try:
-            self.motor_comm_object.write_command("command_string") 
+
+
+
+        print(command_string)
             
-=======
-    def reset_errors_on_epaq(self):
-        self.motor_comm_object.write_command("ACKNOWLEDGEALL")
-    
-    def connect_to_motors(self):
-        x = 0
-        #self.motor_comm_object.connect_to_devices()
-        ##self.motor_comm_object.write_command("HOME " + self.axis_names[1])
-        #self.motor_comm_object.write_command("HOME " + self.axis_names[2])
->>>>>>> a0e363d6005e405fc9abfaacec9a4455f865275a
         
 
 if __name__ == "__main__":
@@ -183,7 +190,8 @@ if __name__ == "__main__":
     window.title("Motor Control Gui")
     window.geometry("210x390")
 
-    A = Ensemble_Motors()
+    #A = Ensemble_Motors()
+    A = EnsembleController()
     B = ThreeAxisControlPanel(window, 5, 5,["nanoX","nanoY","nanoZ"],["+","+","-"], A)
 
 
