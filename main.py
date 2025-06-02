@@ -4,6 +4,7 @@ from PIL import ImageTk, Image
 
 import motor_controls as MotorControls
 from aerotech_communication import Ensemble_Motors
+from aerotech_comm import EnsembleController
 
 # Importing local libraries
 
@@ -19,9 +20,9 @@ if __name__ == "__main__":
     window.title("Alex Laser Heating Control")
     window.geometry("600x600")
 
-    aerotech_epaq = Ensemble_Motors()
-    objectivePositioner = MotorControls.ThreeAxisControlPanel(window, 5, 5,["X","Z","Y"],["+","+","-"],aerotech_epaq)
-    nanoPositioner = MotorControls.ThreeAxisControlPanel(window, 225, 5,["nanoX","nanoY","nanoZ"],["+","+","-"],aerotech_epaq)
+    aerotech_epaq = EnsembleController()
+    objectivePositioner = MotorControls.ThreeAxisControlPanel(window, 5, 5,["X","Z","Y"],[1,-1,-1],aerotech_epaq)
+    nanoPositioner = MotorControls.ThreeAxisControlPanel(window, 225, 5,["nanoX","nanoY","nanoZ"],[1,-1,1],aerotech_epaq)
 
 
 

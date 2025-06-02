@@ -53,7 +53,8 @@ if __name__ == "__main__":
     A = EnsembleController()
     
 
-    #A.Commands.Axes.Enable("X", "Z")
-    #A.Home("X")
+    #A.EnableAxes(["X", "Y", "Z"])
+    #A.HomeAxes(["X", "Y", "Z"])
+    A.MoveINC(["X","Y"],[10,10],[2,1])
 
     #print(A)

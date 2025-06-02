@@ -148,13 +148,13 @@ class ThreeAxisControlPanel(tk.Frame):
         self.step_velocity_text.grid(row = 9, column = 0, columnspan=5)
         self.step_velocity_text.insert(tk.END, "2")
 
-        reset_faults = tk.Button(self, text="RESET ALL")
+        '''reset_faults = tk.Button(self, text="RESET ALL")
         reset_faults.grid(row=10,column=1)
         reset_faults.bind("<ButtonPress>", lambda event:  self.reset_errors_on_epaq())
 
         connect_to_devices = tk.Button(self, text="CONNECT",command=self.connect_to_motors())
         connect_to_devices.grid(row=10,column=2)
-        connect_to_devices.bind("<ButtonPress>", lambda event:  self.connect_to_motors())
+        connect_to_devices.bind("<ButtonPress>", lambda event:  self.connect_to_motors())'''
 
     def motor_inc_motion(self, axis, direction):        
         #Convert the inputs from mm to microns.
@@ -165,11 +165,13 @@ class ThreeAxisControlPanel(tk.Frame):
         velocity = str(velocity_float)
 
         if direction == "+":
-             command_string = "MOVEINC " + axis + " " + step_size + " " + axis  + "F " + velocity
+             #command_string = "MOVEINC " + axis + " " + step_size + " " + axis  + "F " + velocity
+             step_size_float = step_size_float*1
         elif direction == "-":
-            command_string = "MOVEINC " + axis + " -" + step_size + " " + axis  + "F "+ velocity
+            step_size_float = step_size_float*-1
+            #command_string = "MOVEINC " + axis + " -" + step_size + " " + axis  + "F "+ velocity
 
-        self.motor_comm_object.MoveINC(axis, step_size_float, velocity_float)
+        self.motor_comm_object.MoveINC([axis], [step_size_float], [velocity_float])
         
         #self.motor_comm_object.connect_to_devices()
         #self.motor_comm_object.write_command(command_string)        
@@ -177,7 +179,7 @@ class ThreeAxisControlPanel(tk.Frame):
 
 
 
-        print(command_string)
+        #print(command_string)
             
         
 
