@@ -4,8 +4,8 @@ import sys
 
 #sys.path.append(assembly_path1)
 
-from pythonnet import load
-load("coreclr")
+#from pythonnet import load
+#load("coreclr")
 
 import clr
 
@@ -25,7 +25,21 @@ clr.AddReference(assembly_2)
 #clr.AddReference(assembly_3)
 
 import Aerotech.Ensemble # type: ignore
+import Aerotech.Ensemble.Status # type: ignore
 import Aerotech.Common # type: ignore
 
-A = Aerotech.Ensemble.Controller
-A.Connect()
+from Aerotech.Ensemble import Controller # type: ignore
+
+Aerotech.Ensemble.Controller.Connect()
+
+A = Controller.ConnectedControllers[0]
+
+print("Controller Name: {0}", A.Information.Name)
+
+A.Commands.Axes["nanoY"].Motion.Enable()
+A.Commands.Axes["nanoY"].Motion.Home();
+
+#A.Commands.Axes.Enable("X", "Z")
+#A.Home("X")
+
+#print(A)
