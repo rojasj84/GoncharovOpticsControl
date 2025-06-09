@@ -89,7 +89,8 @@ if __name__ == "__main__":
 
     TTLRelays = RelayConnect(ftdi_list[0])
 
-    TTLRelays.write_relay_state([1,0,1,0,1,0,0,0])
+    #TTLRelays.flip_one_relay(5)
+    TTLRelays.write_relay_state([0,0,0,0,0,0,1,0])
     time.sleep(.5)
         
 
