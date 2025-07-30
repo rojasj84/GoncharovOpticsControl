@@ -2,7 +2,7 @@ import tkinter as tk
 import numpy as np
 
 
-win_color = "light gray"
+win_color = "light blue"
 
 class RasterWindow(tk.Frame):
 
@@ -39,6 +39,8 @@ class RasterWindow(tk.Frame):
 
         self.raster_generate_button = tk.Button(self, text="Generate Raster Path", command=self.generate_raster)
         self.raster_generate_button.place(x = 10, y = 200, width=150, height=25)
+
+        self.generate_raster()
 
     def generate_raster(self):
         #Get the values from the text boxes
@@ -99,7 +101,7 @@ class RasterWindow(tk.Frame):
         #Remove extra row
         self.raster_vectors = np.delete(raster_vectors, 0, axis=0)
         
-        print(self.raster_vectors)
+       # print(self.raster_vectors)
         #This class will have a start point, relative to the current center on the screen and relative vector paths that outline the paths of the vectors
         
 
@@ -113,5 +115,8 @@ if __name__ == "__main__":
     window.geometry("800x500")
 
     A = RasterWindow(window,10,10)
+
+    #print(A.start_point)
+    #print(A.raster_vectors)
 
     window.mainloop()
